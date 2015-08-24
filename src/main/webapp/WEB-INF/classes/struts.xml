@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.multipart.saveDir" value="D:/temp"/>
+    <package name="default" extends="struts-default" namespace="/">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+        <action name="index">
+            <result>/index.jsp</result>
+        </action>
+        <action name="home"
+                class="ro.iasinschi.webplatform.actions.HomeAction">
+            <result name="success">/home-action.jsp</result>
+            <result name="login" type="redirectAction">index</result>
+        </action>
+        <action name="login"
+                class="ro.iasinschi.webplatform.actions.LoginAction"
+                method="execute">
+            <result name="success" type="redirectAction">home</result>
+            <result name="error" type="redirectAction">index</result>
+        </action>
+        <action name="logout"
+                class="ro.iasinschi.webplatform.actions.LogoutAction"
+                method="execute">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+        <action name="register"
+                class="ro.iasinschi.webplatform.actions.RegisterAction"
+                method="execute">
+            <result name="success" type="redirectAction">index</result>
+            <result name="error" type="redirectAction">register</result>
+        </action>
+        <action name="upload-file">
+            <result>/upload-file.jsp</result>
+        </action>
+        <action name="excel-import"
+                class="ro.iasinschi.webplatform.actions.ExcelImportAction"
+                method="execute">
+            <result name="success" type="redirectAction">home</result>
+            <result name="error" type="redirectAction">upload-file</result>
+            <result name="login" type="redirectAction">index</result>
+        </action>
+        <action name="fetchData"
+                class="ro.iasinschi.webplatform.actions.FetchUserDataAction"
+                method="execute">
+            <result type="json">
+                <param name="contentType">application/json</param>
+                <param name="root">jsonResult</param>
+            </result>
+        </action>
+        <action name="summarize"
+                class="ro.iasinschi.webplatform.actions.TableSummaryAction"
+                method="execute">
+            <result type="json">
+                <param name="contentType">application/json</param>
+                <param name="root">jsonResult</param>
+            </result>
+        </action>
+        <action name="getTablesForUser"
+                class="ro.iasinschi.webplatform.actions.UserDataUtilAction"
+                method="getTablesForUser">
+            <result type="json">
+                <param name="contentType">application/json</param>
+                <param name="root">jsonResult</param>
+            </result>
+        </action>
+    </package>
+
+</struts>
